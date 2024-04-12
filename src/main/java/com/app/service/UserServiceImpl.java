@@ -1,0 +1,31 @@
+package com.app.service;
+
+import com.app.repository.UserRepository;
+import com.app.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+
+
+	@Override
+	public void save(User user) {
+		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		//user.setRoles(new HashSet<>(roleRepository.findAll()));
+		userRepository.save(user);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public void login(){
+
+	}
+}
