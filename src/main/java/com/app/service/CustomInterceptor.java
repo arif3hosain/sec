@@ -2,42 +2,40 @@ package com.app.service;
 
 /**
  * Created by: arif hosain
- * Mail: arif@innoweb.co
  * Created at : 4/12/2024
  */
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.app.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Component
 public class CustomInterceptor implements HandlerInterceptor {
+    @Autowired
+    private UserService userService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         final String contPath = request.getContextPath();
         String urlPrefix = "http://" + request.getServerName() + ":" + request.getServerPort() + contPath;
-        System.out.println(urlPrefix);
-        System.out.println("===================");
+        System.out.println("Requesting to access at > "+urlPrefix);
         // Check if the user is already logged in
-        boolean isLoggedIn = checkUserAuthentication(request);
+        boolean isLoggedIn = userService.isLogin(request);
         if (isLoggedIn) {
             // Redirect authenticated users away from the login page
-            response.sendRedirect("/welcome");
+            response.sendRedirect("/profile");
             return false; // Return false to stop further processing
         }
         return true; // Allow the request to proceed
     }
 
-    private boolean checkUserAuthentication(HttpServletRequest request) {
-        // Implement your authentication logic here
-        // For example, check if a user session exists
-        // Return true if the user is authenticated, false otherwise
-        return false;
-    }
+
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -50,4 +48,6 @@ public class CustomInterceptor implements HandlerInterceptor {
                                 Exception ex) throws Exception {
         // This method is empty, but you can override it if needed
     }
+
+
 }

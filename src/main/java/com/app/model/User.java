@@ -1,20 +1,32 @@
 package com.app.model;
 
 import javax.persistence.*;
-import java.util.Set;
-
+/**
+ *
+ * @author Sarveashwaran
+ */
 @Entity
 @Table(name = "user")
 public class User {
     private Long id;
     private String username;
     private String password;
+    private String gender;
+    private String school;
 
     @Transient
     private String passwordConfirm;
-    @Transient
-    private boolean isCorrectUsername;
 
+
+    public User() {
+    }
+
+    public User(String username, String password, String gender, String school) {
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.school = school;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,13 +64,23 @@ public class User {
     }
 
 
-    public boolean isCorrectUsername() {
-        return isCorrectUsername;
+
+    public String getGender() {
+        return gender;
     }
 
-    public void setCorrectUsername(boolean correctUsername) {
-        isCorrectUsername = correctUsername;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
 
     @Override
     public String toString() {
@@ -66,7 +88,11 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", school='" + school + '\'' +
                 ", passwordConfirm='" + passwordConfirm + '\'' +
                 '}';
     }
+
+
 }

@@ -1,0 +1,95 @@
+<%--
+    Document   : Main
+    Created on : Mar 19, 2024, 12:59:43 PM
+    Author     : Sarveashwaran
+--%>
+
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>dash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+<div class="w-full h-screen flex flex-row items-center justify-center">
+    <div class="w-4/6 h-screen  flex flex-col justify-between items-center">
+        <div class="bg-gray-300 drop-shadow-lg w-full h-20 flex flex-row justify-between p-2">
+            <img src="<%=request.getContextPath()%>/images/logo2.jpg" class="w-[174px] h-[72px]" alt="" srcset="" />
+            <img src="<%=request.getContextPath()%>/images/profile.jpg" class="w-[72px] h-[72px]" alt="" srcset="" />
+        </div>
+        <div class="text-black">How Can I Help You Today ?</div>
+        <div class="w-full h-16 p-2 flex flex-row items-center justify-center space-x-1">
+
+            <button
+                    class="rounded-full bg-white h-10 w-10 border border-black text-white p-2 flex items-center justify-center">
+                <svg class="h-7 w-7" width="64px" height="64px" viewBox="0 0 32 32" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <title>plus</title>
+                        <desc>Created with Sketch Beta.</desc>
+                        <defs> </defs>
+                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                            <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-360.000000, -1035.000000)"
+                               fill="#000000">
+                                <path
+                                        d="M388,1053 L378,1053 L378,1063 C378,1064.1 377.104,1065 376,1065 C374.896,1065 374,1064.1 374,1063 L374,1053 L364,1053 C362.896,1053 362,1052.1 362,1051 C362,1049.9 362.896,1049 364,1049 L374,1049 L374,1039 C374,1037.9 374.896,1037 376,1037 C377.104,1037 378,1037.9 378,1039 L378,1049 L388,1049 C389.104,1049 390,1049.9 390,1051 C390,1052.1 389.104,1053 388,1053 L388,1053 Z M388,1047 L380,1047 L380,1039 C380,1036.79 378.209,1035 376,1035 C373.791,1035 372,1036.79 372,1039 L372,1047 L364,1047 C361.791,1047 360,1048.79 360,1051 C360,1053.21 361.791,1055 364,1055 L372,1055 L372,1063 C372,1065.21 373.791,1067 376,1067 C378.209,1067 380,1065.21 380,1063 L380,1055 L388,1055 C390.209,1055 392,1053.21 392,1051 C392,1048.79 390.209,1047 388,1047 L388,1047 Z"
+                                        id="plus" sketch:type="MSShapeGroup"> </path>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+            <label class="relative block w-5/6 flex flex-row justify-center items-center">
+                <input
+                        class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pr-9 pl-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        placeholder="How you want your music ?" type="text" name="search" />
+                <button class="flex items-center justify-center">
+                  <span class="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <svg width="36px" height="23px"" viewBox=" 0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#1E7ED7">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                                d="M2.996 12.5l-1.157 8.821 20.95-8.821-20.95-8.821zm16.028-.5H3.939l-.882-6.724zM3.939 13h15.085L3.057 19.724z">
+                        </path>
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                      </g>
+                      </svg>
+                  </span>
+                </button>
+            </label>
+        </div>
+    </div>
+    <div class="w-2/6 shadow-md h-screen flex flex-col px-2 py-4 justify-between items-center">
+        <h1 class="text-black bg-[#CDFD9F] w-2/3 text-center">Chat History</h1>
+        <div class="flex flex-col justify-start w-2/3 space-y-6 h-4/6">
+            <div class="flex flex-col">
+                <span>Today</span>
+                <textarea class="rounded-[5px] h-7 border border-black"></textarea>
+            </div>
+            <div class="flex flex-col">
+                <span>This Week</span>
+                <textarea class="rounded-[5px] h-7 border border-black"></textarea>
+            </div>
+            <div class="flex flex-col space-y-1">
+                <span>This Month</span>
+                <textarea class="rounded-[5px] h-7 border border-black"></textarea>
+                <textarea class="rounded-[5px] h-7 border border-black"></textarea>
+            </div>
+        </div>
+
+        <button class="bg-[#0059D6] text-white w-5/6 h-10 rounded-[10px]">
+            View All
+        </button>
+    </div>
+</div>
+</body>
+
+</html>

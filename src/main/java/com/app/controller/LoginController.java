@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.model.User;
+import com.app.other.Other;
 import com.app.repository.UserRepository;
 import com.app.service.UserService;
 import com.app.validator.UserValidator;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by: arif hosain
- * Mail: arif@innoweb.co
  * Created at : 4/12/2024
  */
 
@@ -49,23 +49,19 @@ public class LoginController {
     public String loginAccess(Model model, @ModelAttribute("login") User login, HttpServletRequest request) {
         User user = userRepository.findByUsername(login.getUsername());
         if (isNotEmpty(login.getPassword())) {
-            System.out.println("---1");
-            if (user.getPassword().equalsIgnoreCase(login.getPassword())) {
-                System.out.println("login success");
-                return "redirect:/welcome";
+            if (user.getPassword().equalsIgnoreCase(Other.encrypt(login.getPassword()))) {
+                userService.login(login.getUsername(), login.getPassword(), request);
+                return "redirect:/main";
             } else {
-                System.out.println("pass not matched>>>>>>>>>>>>>>"+request.getSession().getAttribute("username"));
                 model.addAttribute("error", "Incorrect Password, Try Again.");
                 model.addAttribute("validUser", request.getSession().getAttribute("username") != null ? true : false);
                 return "login";
             }
         } else
             if (user != null ) {
-            System.out.println("---2");
             request.getSession().setAttribute("username", login.getUsername());
             return "redirect:/login?check=true";
         } else {
-            System.out.println("---3");
             model.addAttribute("error", "Username doesn't matched.");
             return "login";
         }
@@ -77,5 +73,13 @@ public class LoginController {
         if (str == null) return false;
         if(str.trim().equals("")) return false;
         return str.trim().length() > 0;
+    }
+
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String login( HttpServletRequest request) {
+       request.getSession().invalidate();
+       request.getSession().removeAttribute("loggedInUser");
+        return "login";
     }
 }

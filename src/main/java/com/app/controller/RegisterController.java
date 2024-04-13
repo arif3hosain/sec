@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.app.model.User;
 import com.app.service.UserService;
 
+/**
+ *
+ * @author Sarveashwaran
+ */
+
 @Controller
-public class UserController {
+public class RegisterController {
     @Autowired
     private UserService userService;
 
@@ -23,21 +28,17 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
-
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-
         userService.save(userForm);
-
-        return "redirect:/welcome";
+        return "redirect:/profile";
     }
 
 
