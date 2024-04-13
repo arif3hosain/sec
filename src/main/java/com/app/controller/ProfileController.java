@@ -29,14 +29,25 @@ public class ProfileController {
         if(!userService.isLogin(request)) return "redirect:/login";
         userForm = userService.loginUser(request);
         model.addAttribute("userForm", userForm);
+        model.addAttribute("edit", false);
         return "profile";
     }
 
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute("userForm") User userForm, HttpServletRequest request, Model model){
         if(!userService.isLogin(request)) return "redirect:/login";
-        System.out.println(userForm.toString());
         userService.update(userForm, request);
         return "redirect:/profile";
     }
+
+    @RequestMapping("/edit-profile")
+    public String editProfile(@ModelAttribute("userForm") User userForm, HttpServletRequest request, Model model){
+        if(!userService.isLogin(request)) return "redirect:/login";
+        userForm = userService.loginUser(request);
+        model.addAttribute("userForm", userForm);
+        model.addAttribute("edit", true);
+        return "profile";
+    }
+
+
 }

@@ -24,8 +24,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(User user, HttpServletRequest request) {
+
 		User u = userRepository.getOne(user.getId());
-		u.setGender(user.getGender());
+		u.setPassword(Other.encrypt(user.getPassword()));
 		u.setSchool(user.getSchool());
 		userRepository.save(u);
 		this.updateSession(request, u);
