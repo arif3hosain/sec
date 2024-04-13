@@ -68,6 +68,8 @@
         </div>
     </div>
     <div class="w-2/6 shadow-md h-screen flex flex-col px-2 py-4 justify-between items-center">
+        <a style="margin-left: 20px; padding: 4px;" class="bg-[green] text-white  rounded-[5px]" href="http://localhost:8080/profile">Profile</a>
+        <a style="margin-left: 20px; padding: 4px;" class="bg-[orange] text-white  rounded-[5px]" href="http://localhost:8080/logout">Logout</a>
         <h1 class="text-black bg-[#CDFD9F] w-2/3 text-center">Chat History</h1>
         <div class="flex flex-col justify-start w-2/3 space-y-6 h-4/6">
             <div class="flex flex-col">
