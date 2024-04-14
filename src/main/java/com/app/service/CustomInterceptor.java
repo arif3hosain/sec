@@ -24,7 +24,6 @@ public class CustomInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         final String contPath = request.getContextPath();
         String urlPrefix = "http://" + request.getServerName() + ":" + request.getServerPort() + contPath;
-        System.out.println("Requesting to access at > "+urlPrefix);
         // Check if the user is already logged in
         boolean isLoggedIn = userService.isLogin(request);
         if (isLoggedIn) {
