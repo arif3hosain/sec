@@ -10,22 +10,175 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>dash</title>
+    <title>Chat View</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+    #profileLink{
+        cursor: pointer;
+    }
+    #chatBox {
+        position: relative;
+        text-align: left;
+    }
+    .messageContainer {
+        display: flex;
+        align-items: flex-start;
+    }
 
+    .avatar {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px; /* Adjust margin as needed */
+    }
+
+    .username {
+        font-weight: bold;
+        margin-bottom: 5px; /* Adjust margin as needed */
+    }
+
+    .message {
+        text-align: left;
+    }
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px; /* Adjust margin as needed */
+    }
+
+    .regenerateButton,
+    .transcribeButton {
+        margin: 0 5px; /* Adjust margin as needed */
+        padding: 5px 10px; /* Adjust padding as needed */
+        font-size: 14px; /* Adjust font size as needed */
+        border: 1px solid #ccc; /* Add border */
+        border-radius: 4px; /* Optional: Add border radius */
+        background-color: #fff; /* Optional: Set background color */
+        cursor: pointer; /* Optional: Add pointer cursor */
+    }
+
+    .regenerateButton:hover,
+    .transcribeButton:hover {
+        background-color: #f0f0f0; /* Optional: Change background color on hover */
+    }
+    .chat-box {
+        height: 400px; /* Set the height of the chat box */
+        width: 700px;
+        background: #a2d4ff;
+        overflow-y: auto; /* Allow vertical scrolling */
+        padding:10px;
+        border-radius: 10px;
+    }
+
+
+</style>
+    <script>
+        var clearFirstTime = false;
+        function clear(){
+            alert('hi')
+            $('#chatBox').html(''); // Clear the chat box
+        }
+        function handleKeyPress(event) {
+            // Check if the Enter key was pressed
+            if (event.key === 'Enter') {
+                // Call your desired function here
+                var inputValue = document.getElementById('message').value;
+                if (inputValue.trim() !== '') {
+                    // Call your desired function here
+                    send();
+                }
+
+            }
+        }
+        function redirectToNewPage() {
+            // Redirect to the new page
+            window.location.href = "<%=request.getContextPath()%>/profile";
+        }
+
+        function send() {
+            var msg = $('#message').val();
+            if(!clearFirstTime){
+                $('#chatBox').html(''); // Clear the chat box
+                clearFirstTime = true;
+            }
+
+            $('#chatBox').append('<div class="messageContainer"><img src="<%=request.getContextPath()%>/images/profile.jpg" class="avatar" /><div><p class="username">You</p><p class="message">' + msg + '</p></div></div>');
+
+            // Show loading modal
+            $('#loadingModal').modal('show');
+
+            // Simulate loading process for about a minute
+            setTimeout(function() {
+                // Hide loading modal
+                $('#loadingModal').modal('hide');
+
+                // Append message indicating music is ready
+                // Clear the message input field
+                $('#chatBox').append(' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
+                // Append download link
+                <%--$('#chatBox').append('<a href="<%=request.getContextPath()%>/music/audio.mp3" download>Download Audio</a>');--%>
+                $('#chatBox').append('<div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
+
+                $('#message').val('');
+            }, 2000); // 1 minute in milliseconds
+        }
+
+
+        function generate(){
+            $('#loadingModal').modal('show');
+            setTimeout(function() {
+                // Hide loading modal
+                $('#loadingModal').modal('hide');
+                $('#chatBox').append(' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
+                // Append download link
+                <%--$('#chatBox').append('<a href="<%=request.getContextPath()%>/music/audio.mp3" download>Download Audio</a>');--%>
+                $('#chatBox').append('<div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
+
+                $('#message').val('');
+            }, 2000); // 1 minute in milliseconds
+        }
+
+        function transcribe(){
+            $('#transcribeModal').modal('show');
+            setTimeout(function() {
+                // Hide loading modal
+                $('#transcribeModal').modal('hide');
+
+                $('#chatBox').append('<br><embed src="${pageContext.request.contextPath}/music/music.pdf" type="application/pdf" width="100%" height="70%"><br>');
+
+                $('#message').val('');
+            }, 2000); // 1 minute in milliseconds
+        }
+    </script>
 </head>
 <body>
+<%--<embed src="${pageContext.request.contextPath}/music/music.pdf" type="application/pdf" width="100%" height="100%">--%>
+
+<%--<audio controls>
+    <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg">
+    <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<a href="<%=request.getContextPath()%>/music/audio.mp3" download>Download Audio</a>--%>
+
 <div class="w-full h-screen flex flex-row items-center justify-center">
     <div class="w-4/6 h-screen  flex flex-col justify-between items-center">
         <div class="bg-gray-300 drop-shadow-lg w-full h-20 flex flex-row justify-between p-2">
             <img src="<%=request.getContextPath()%>/images/logo2.jpg" class="w-[174px] h-[72px]" alt="" srcset="" />
-            <img src="<%=request.getContextPath()%>/images/profile.jpg" class="w-[72px] h-[72px]" alt="" srcset="" />
+            <img id="profileLink" onclick="redirectToNewPage()" src="<%=request.getContextPath()%>/images/profile.jpg" class="w-[72px] h-[72px]" alt="" srcset="" />
         </div>
-        <div class="text-black">How Can I Help You Today ?</div>
-        <div class="w-full h-16 p-2 flex flex-row items-center justify-center space-x-1">
+        <div class="text-black chat-box" id="chatBox" >
 
-            <button
-                    class="rounded-full bg-white h-10 w-10 border border-black text-white p-2 flex items-center justify-center">
+            How Can I Help You Today ?</div>
+        <div class="w-full h-16 p-2 flex flex-row items-center justify-center space-x-1">
+            <script>
+                function showAlert() {
+                    $('#chatBox').html(''); // Clear the chat box
+                }
+
+            </script>
+            <button class="rounded-full bg-white h-10 w-10 border border-black text-white p-2 flex items-center justify-center" onclick="showAlert()">
                 <svg class="h-7 w-7" width="64px" height="64px" viewBox="0 0 32 32" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000">
@@ -49,8 +202,8 @@
             <label class="relative block w-5/6 flex flex-row justify-center items-center">
                 <input
                         class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pr-9 pl-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                        placeholder="How you want your music ?" type="text" name="search" />
-                <button class="flex items-center justify-center">
+                        placeholder="How you want your music ?" type="text" name="search" id="message" onkeypress="handleKeyPress(event)" />
+                <button class="flex items-center justify-center" onclick="send()">
                   <span class="absolute inset-y-0 right-0 flex items-center pr-2">
                     <svg width="36px" height="23px"" viewBox=" 0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#1E7ED7">
                       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -92,6 +245,41 @@
         </button>
     </div>
 </div>
+<script src="<%=request.getContextPath()%>/js/custom.js"></script>
+
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p>Your music is being composed...</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="transcribeModal" tabindex="-1" role="dialog" aria-labelledby="transcribeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Please wait...</span>
+                </div>
+                <p>Transcribing...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

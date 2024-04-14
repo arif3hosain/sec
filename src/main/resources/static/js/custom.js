@@ -1,3 +1,34 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {
     // Attach the event listener to all input fields with the class 'numericInput'
     $('.numericInput').on('input', function() {
