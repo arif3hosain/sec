@@ -65,7 +65,6 @@
     .chat-box {
         height: 400px; /* Set the height of the chat box */
         width: 700px;
-        background: #a2d4ff;
         overflow-y: auto; /* Allow vertical scrolling */
         padding:10px;
         border-radius: 10px;
@@ -76,7 +75,6 @@
     <script>
         var clearFirstTime = false;
         function clear(){
-            alert('hi')
             $('#chatBox').html(''); // Clear the chat box
         }
         function handleKeyPress(event) {
@@ -102,9 +100,7 @@
                 $('#chatBox').html(''); // Clear the chat box
                 clearFirstTime = true;
             }
-
-            $('#chatBox').append('<div class="messageContainer"><img src="<%=request.getContextPath()%>/images/profile.jpg" class="avatar" /><div><p class="username">You</p><p class="message">' + msg + '</p></div></div>');
-
+            $('#chatBox').append('<div class="messageContainer"><img src="<%=request.getContextPath()%>/images/profile.jpg" class="avatar" /><div><p class="username">You</p><p class="message">' + msg + '</p></div><br></div>');
             // Show loading modal
             $('#loadingModal').modal('show');
 
@@ -115,7 +111,8 @@
 
                 // Append message indicating music is ready
                 // Clear the message input field
-                $('#chatBox').append(' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
+                $('#chatBox').append('<br><div class="messageContainer"><img src="<%=request.getContextPath()%>/images/bot.png" class="avatar" /><div><p class="username">RhythmiQ</p></div><br></div>' +
+                    ' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
                 // Append download link
                 <%--$('#chatBox').append('<a href="<%=request.getContextPath()%>/music/audio.mp3" download>Download Audio</a>');--%>
                 $('#chatBox').append('<div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
@@ -130,13 +127,16 @@
             setTimeout(function() {
                 // Hide loading modal
                 $('#loadingModal').modal('hide');
-                $('#chatBox').append(' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
-                // Append download link
-                <%--$('#chatBox').append('<a href="<%=request.getContextPath()%>/music/audio.mp3" download>Download Audio</a>');--%>
-                $('#chatBox').append('<div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
+                $('#chatBox').append('<br><div class="messageContainer"><img src="<%=request.getContextPath()%>/images/bot.png" class="avatar" /><div><p class="username">RhythmiQ</p></div><br></div>' +
+                    ' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
+                 $('.buttonContainer').remove();
+                $('#chatBox').append('<br><div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
 
                 $('#message').val('');
+
+
             }, 2000); // 1 minute in milliseconds
+
         }
 
         function transcribe(){
@@ -145,10 +145,21 @@
                 // Hide loading modal
                 $('#transcribeModal').modal('hide');
 
-                $('#chatBox').append('<br><embed src="${pageContext.request.contextPath}/music/music.pdf" type="application/pdf" width="100%" height="70%"><br>');
+                $('#chatBox').append('<br><div class="messageContainer"><img src="<%=request.getContextPath()%>/images/bot.png" class="avatar" /><div><p class="username">RhythmiQ</p></div><br></div>' +
+                    '<div><embed id="pdfEmbed" src="${pageContext.request.contextPath}/music/music.pdf#toolbar=0" type="application/pdf" width="400" height="150" onclick="openPdfInNewTab()"></div>');
 
                 $('#message').val('');
+                $('.buttonContainer').remove();
             }, 2000); // 1 minute in milliseconds
+
+            var chatbox = document.getElementById("message");
+            chatbox.disabled = true;
+
+        }
+
+        function openPdfInNewTab() {
+            var pdfSrc = $('#pdfEmbed').attr('src');
+            window.open(pdfSrc, '_blank');
         }
     </script>
 </head>
@@ -221,7 +232,6 @@
         </div>
     </div>
     <div class="w-2/6 shadow-md h-screen flex flex-col px-2 py-4 justify-between items-center">
-        <a style="margin-left: 20px; padding: 4px;" class="bg-[green] text-white  rounded-[5px]" href="http://localhost:8080/profile">Profile</a>
         <a style="margin-left: 20px; padding: 4px;" class="bg-[orange] text-white  rounded-[5px]" href="http://localhost:8080/logout">Logout</a>
         <h1 class="text-black bg-[#CDFD9F] w-2/3 text-center">Chat History</h1>
         <div class="flex flex-col justify-start w-2/3 space-y-6 h-4/6">
