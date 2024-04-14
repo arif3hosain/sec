@@ -1,73 +1,66 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--
+    Document   : Login
+    Created on : Mar 19, 2024, 12:59:43 PM
+    Author     : Sarveashwaran
+--%>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    "cursive": ['cursive', 'sans-serif'],
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-image: url('<%=request.getContextPath()%>/images/bg.jpg');
+            background-size: cover;
+            backdrop-filter: blur(10px);
+            /* Adjust the blur radius as needed */
+        }
+    </style>
 
-    <title>Log in with your account</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
-
 <body>
-
-<div class="container">
-
-    <form method="POST" action="${contextPath}/login" class="form-signin" modelAttribute="login" >
-        <h4 class="form-heading">Secured Login</h4>
-
-        <c:if test="${!validUser && login.password == null}">
-            <input name="username" type="text" class="form-control" placeholder="Enter username" autofocus="true" required="required"/>
-            <span>${error}</span>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
-        </c:if>
-
-        <c:if test="${validUser }">
-            <input name="username" type="hidden" value="${login.username}" />
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login </button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
-        </c:if>
-
-       <%-- <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Username" autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
-        </div>--%>
-
+<div class="h-screen flex pt-0 md:pt-2 justify-center items-center bg-cover no-repeat">
+    <form method="POST" modelAttribute="login"  action="/login"
+               class="p-6 w-[492px] bg-white shadow-xl rounded-[10px] h-[600px] flex flex-col items-center justify-center space-y-6">
+        <img src="<%=request.getContextPath()%>/images/logo.jpg" class="w-[200px] h-[100px]" alt="" srcset="" />
+        <h1 class="text-center text-2xl md:text-4xl">Welcome To RhythmiQ <br> <span class="font-cursive italic">Learn
+          Music Your Own
+          Way</span>
+        </h1>
+        <div class="flex flex-col justify-center items-center space-y-6">
+            <div class="flex flex-col justify-start">
+                <label for="username" class="text-xl">Username</label>
+                <input
+                        class="placeholder:italic placeholder:text-slate-400 block bg-white w-[400px] border border-slate-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Type your Username..." type="text" name="username" id="username" required="required" value="${login.username}" />
+                <span style="color: red; "><c:out value="${errorUsername}"></c:out></span>
+            </div>
+            <div class="flex flex-col justify-start">
+                <label for="password" class="text-xl">Password</label>
+                <input
+                        class="placeholder:italic placeholder:text-slate-400 block bg-white w-[400px] border border-slate-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+                        placeholder="Type your Password..." type="password" name="password" id="password" required="required" />
+                <span style="color: red; "><c:out value="${errorPassword}"></c:out></span>
+            </div>
+        </div>
+        <button type="submit" class="bg-[#0059D6] text-white w-full md:w-16 h-10 rounded-[5px]" >
+            Login
+        </button>
+        <h1>Don't Have an Account ? <a class="text-[#0059D6] underline" href="<%=request.getContextPath()%>/registration">Click Here</a></h1>
     </form>
 </div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<%--<script src="${contextPath}/resources/js/bootstrap.min.js"></script>--%>
-<%--<script src="${contextPath}/resources/js/bootstrap.min.js"></script>--%>
-
-<script>
-
-</script>
 </body>
 </html>

@@ -130,6 +130,7 @@
                 $('#chatBox').append('<br><div class="messageContainer"><img src="<%=request.getContextPath()%>/images/bot.png" class="avatar" /><div><p class="username">RhythmiQ</p></div><br></div>' +
                     ' <audio controls> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/ogg"> <source src="${pageContext.request.contextPath}/music/audio.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>');
                  $('.buttonContainer').remove();
+                 // $('.buttonContainer').remove();
                 $('#chatBox').append('<br><div class="buttonContainer"><button class="regenerateButton" onclick="generate()">Regenerate</button><button class="transcribeButton" onclick="transcribe()">Transcribe</button></div>');
 
                 $('#message').val('');

@@ -48,21 +48,19 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginAccess(Model model, @ModelAttribute("login") User login, HttpServletRequest request) {
         User user = userRepository.findByUsername(login.getUsername());
-        if (isNotEmpty(login.getPassword())) {
-            if (user.getPassword().equalsIgnoreCase(Other.encrypt(login.getPassword()))) {
+        if(user !=null){
+            if(Other.encrypt(getString(login.getPassword())).equals(user.getPassword())){
                 userService.login(login.getUsername(), login.getPassword(), request);
                 return "redirect:/main";
-            } else {
-                model.addAttribute("error", "Incorrect Password, Try Again.");
-                model.addAttribute("validUser", request.getSession().getAttribute("username") != null ? true : false);
+            }else {
+                model.addAttribute("errorUsername", "");
+                model.addAttribute("errorPassword", "Invalid Password");
                 return "login";
             }
-        } else
-            if (user != null ) {
-            request.getSession().setAttribute("username", login.getUsername());
-            return "redirect:/login?check=true";
-        } else {
-            model.addAttribute("error", "Username doesn't matched.");
+
+        }else {
+            model.addAttribute("errorUsername", "Invalid username");
+            model.addAttribute("errorPassword", "");
             return "login";
         }
 
@@ -73,6 +71,11 @@ public class LoginController {
         if (str == null) return false;
         if(str.trim().equals("")) return false;
         return str.trim().length() > 0;
+    }
+
+    public static String getString(Object value) {
+        if (value == null || value.equals("null") || value.equals("")) return "";
+        else return value.toString().trim();
     }
 
 
