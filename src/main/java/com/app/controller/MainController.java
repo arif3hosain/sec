@@ -3,6 +3,7 @@ package com.app.controller;
 import com.app.model.User;
 import com.app.other.Other;
 import com.app.repository.ChatRepo;
+import com.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,13 @@ public class MainController {
 
     @Autowired
     private ChatRepo chatRepo;
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping("/main")
     public String main( HttpServletRequest request, Model model){
+        if(!userService.isLogin(request)) return "redirect:/login";
         model.addAttribute("chat", chatRepo.getOne(1L));
         return "main";
     }
